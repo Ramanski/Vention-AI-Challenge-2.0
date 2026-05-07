@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    font-family: Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+      Droid Sans, Helvetica Neue, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: #f8fafc;
+    color: #0f172a;
+    font-size: 14px;
+    font-family: Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+      Droid Sans, Helvetica Neue, sans-serif;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
