@@ -57,8 +57,8 @@ export function LeaderboardRow({ employee, rank, selectedCategory }: Leaderboard
         expanded ? 'border border-[#0ea5e9]/80 shadow-sm' : 'border border-slate-100'
       }`}
     >
-      <div className="grid grid-cols-[34px_56px_minmax(180px,1fr)_64px_94px_44px] items-center gap-3 px-4 py-4 min-[769px]:grid-cols-[40px_72px_minmax(260px,1fr)_auto_52px] min-[769px]:px-7 min-[769px]:py-6">
-        <div className="text-[40px] font-bold leading-none text-slate-400">{rank}</div>
+      <div className="grid grid-cols-[34px_56px_minmax(180px,1fr)_44px] items-center gap-3 px-4 py-4 min-[769px]:grid-cols-[40px_72px_minmax(260px,1fr)_auto_52px] min-[769px]:px-7 min-[769px]:py-6">
+        <div className="text-[24px] font-bold leading-none text-slate-400">{rank}</div>
 
         <AvatarPhoto
           fullName={employee.fullName}
@@ -68,9 +68,9 @@ export function LeaderboardRow({ employee, rank, selectedCategory }: Leaderboard
           sizeClassName={avatarSizeClass}
         />
 
-        <div>
-          <p className="truncate text-[24px] font-bold leading-tight text-slate-900">{employee.fullName}</p>
-          <p className="truncate text-[14px] text-[#46658b]">
+        <div className="min-w-0">
+          <p className="whitespace-normal break-words text-[24px] font-bold leading-tight text-slate-900">{employee.fullName}</p>
+          <p className="whitespace-normal break-words text-[14px] text-[#46658b]">
             {employee.position} ({employee.departmentCode})
           </p>
         </div>
