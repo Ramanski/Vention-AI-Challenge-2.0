@@ -133,24 +133,24 @@ export function LeaderboardRow({ employee, rank, selectedCategory }: Leaderboard
         <div className="border-t border-slate-200 px-4 pb-2 pt-6 min-[769px]:px-7">
           <p className="mb-6 text-[12px] font-semibold uppercase tracking-wide text-[#46658b]">Recent Activity</p>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px] text-left">
+            <table className="w-full min-w-[460px] table-auto text-left">
               <thead>
                 <tr className="border-b border-slate-200 text-[12px] uppercase tracking-wide text-[#46658b]">
                   <th className="px-2 pb-4 font-semibold">Activity</th>
-                  <th className="px-2 pb-4 font-semibold">Category</th>
-                  <th className="px-2 pb-4 font-semibold">Date</th>
-                  <th className="px-2 pb-4 text-right font-semibold">Points</th>
+                  <th className="w-[140px] px-2 pb-4 font-semibold">Category</th>
+                  <th className="w-[96px] px-2 pb-4 font-semibold">Date</th>
+                  <th className="w-[72px] px-2 pb-4 text-right font-semibold">Points</th>
                 </tr>
               </thead>
               <tbody>
                 {recentActivity.map((activity) => (
                   <tr key={`${employee.id}-${activity.activity}-${activity.date}`} className="border-b border-slate-200 text-[14px] text-[#46658b]">
-                    <td className="px-2 py-5 text-[14px] font-semibold text-slate-900">{activity.activity}</td>
+                    <td className="whitespace-normal break-words [overflow-wrap:anywhere] px-2 py-5 text-[14px] font-semibold text-slate-900">{activity.activity}</td>
                     <td className="px-2 py-5">
                       <span className="inline-flex rounded-2xl bg-slate-200 px-4 py-1 text-[12px] text-[#46658b]">{activity.category}</span>
                     </td>
-                    <td className="px-2 py-5 text-[14px]">{formatDate(activity.date)}</td>
-                    <td className="px-2 py-5 text-right text-[14px] font-bold text-[#0ea5e9]">+{activity.points}</td>
+                    <td className="break-words px-2 py-5 text-[14px]">{formatDate(activity.date).replace(/-/g, '-\u200b')}</td>
+                    <td className="whitespace-nowrap px-2 py-5 text-right text-[14px] font-bold text-[#0ea5e9]">+{activity.points}</td>
                   </tr>
                 ))}
               </tbody>
