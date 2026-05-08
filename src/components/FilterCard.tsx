@@ -18,7 +18,7 @@ const selectClassName =
   'h-8 w-[150px] appearance-none rounded-[2px] border border-[#373737] bg-[#ebebed] px-3 pr-9 text-[14px] font-normal text-black outline-none shadow-none transition focus:border-black focus:ring-0 focus:shadow-[0_0_0_1px_#000] sm:w-[160px]'
 
 const searchClassName =
-  'h-8 w-full rounded-[2px] border border-[#373737] bg-[#ebebed] py-[1px] pl-11 pr-3 text-[14px] font-normal text-black outline-none shadow-none transition-all placeholder:text-slate-700 focus:border-black focus:ring-0 focus:shadow-[0_0_0_1px_#000] focus:pl-3'
+  'h-8 w-full rounded-[2px] border border-[#373737] bg-[#ebebed] py-[1px] pl-11 pr-10 text-[14px] font-normal text-black outline-none shadow-none transition-all placeholder:text-slate-700 focus:border-black focus:ring-0 focus:shadow-[0_0_0_1px_#000] focus:pl-3'
 
 export function FilterCard({
   years,
@@ -128,6 +128,19 @@ export function FilterCard({
             type="text"
             placeholder="Search employee..."
           />
+          {searchValue.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => onSearchChange('')}
+              className="absolute right-2 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-300/70 hover:text-slate-800"
+              aria-label="Clear search"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="h-3.5 w-3.5">
+                <path d="m6 6 12 12" />
+                <path d="m18 6-12 12" />
+              </svg>
+            </button>
+          ) : null}
         </label>
       </div>
     </section>

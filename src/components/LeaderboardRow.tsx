@@ -57,14 +57,14 @@ export function LeaderboardRow({ employee, rank, selectedCategory }: Leaderboard
         expanded ? 'border border-[#0ea5e9]/80 shadow-sm' : 'border border-slate-100'
       }`}
     >
-      <div className="grid grid-cols-[34px_56px_minmax(180px,1fr)_64px_94px_44px] items-center gap-3 px-4 py-4 min-[769px]:grid-cols-[40px_72px_minmax(260px,1fr)_160px_220px_52px] min-[769px]:px-7 min-[769px]:py-6">
+      <div className="grid grid-cols-[34px_56px_minmax(180px,1fr)_64px_94px_44px] items-center gap-3 px-4 py-4 min-[769px]:grid-cols-[40px_72px_minmax(260px,1fr)_auto_52px] min-[769px]:px-7 min-[769px]:py-6">
         <div className="text-[40px] font-bold leading-none text-slate-400">{rank}</div>
 
         <AvatarPhoto
           fullName={employee.fullName}
           gradientFrom={employee.avatarGradientFrom}
           gradientTo={employee.avatarGradientTo}
-          borderClassName="border-white"
+          borderClassName="border-transparent"
           sizeClassName={avatarSizeClass}
         />
 
@@ -75,7 +75,7 @@ export function LeaderboardRow({ employee, rank, selectedCategory }: Leaderboard
           </p>
         </div>
 
-        <div className="hidden h-full items-center justify-end pr-4 min-[769px]:flex">
+        <div className="hidden h-full items-center justify-end min-[769px]:flex">
           <div className="inline-flex items-start gap-4 text-[#0ea5e9]">
             {visibleCategories.map((cat) => (
               <div key={cat} className="inline-flex flex-col items-center">
@@ -84,14 +84,14 @@ export function LeaderboardRow({ employee, rank, selectedCategory }: Leaderboard
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="hidden h-full flex-col items-end border-l border-slate-200 pl-6 min-[769px]:flex">
-          <span className="text-[12px] font-semibold uppercase tracking-wide text-slate-400">Total</span>
-          <span className="mt-1 inline-flex items-center gap-2 text-[24px] font-bold text-[#0ea5e9]">
-            <StarIcon className="h-6 w-6" />
-            {employee.score}
-          </span>
+          <div className="ml-4 flex h-full flex-col items-end border-l border-slate-200 pl-4">
+            <span className="text-[12px] font-semibold uppercase tracking-wide text-slate-400">Total</span>
+            <span className="mt-1 inline-flex items-center gap-2 text-[24px] font-bold text-[#0ea5e9]">
+              <StarIcon className="h-6 w-6" />
+              {employee.score}
+            </span>
+          </div>
         </div>
 
         <button

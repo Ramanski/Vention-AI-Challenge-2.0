@@ -24,7 +24,7 @@ function App() {
   )
 
   const employeesByPrimaryFilters = useMemo(() => {
-    const shouldAggregate = selectedQuarter === 'all'
+    const shouldAggregate = selectedYear === 'all' || selectedQuarter === 'all'
 
     const filtered = mockLeaderboard.filter((employee) => {
       const yearMatch = selectedYear === 'all' || String(employee.year) === selectedYear
@@ -34,7 +34,7 @@ function App() {
       return yearMatch && quarterMatch && categoryMatch
     })
 
-    // Aggregate scores by employee when no specific quarter is selected
+    // Aggregate scores by employee when filters span multiple time periods.
     if (shouldAggregate) {
       const aggregated = new Map<string, typeof filtered[0]>()
 
@@ -56,7 +56,7 @@ function App() {
       return Array.from(aggregated.values()).sort((left, right) => right.score - left.score)
     }
 
-    // Specific quarter selected — keep records as-is
+    // A single year + quarter selection maps to one record per employee.
     return filtered.sort((left, right) => right.score - left.score)
   }, [selectedCategory, selectedQuarter, selectedYear])
 

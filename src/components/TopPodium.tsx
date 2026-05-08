@@ -41,8 +41,8 @@ function TopCard({ employee, rank, place }: { employee: LeaderboardEmployee; ran
         </span>
       </div>
 
-      <p className="text-center text-[24px] font-bold leading-tight text-slate-900">{employee.fullName}</p>
-      <p className="mt-1 text-center text-[14px] text-slate-500">
+      <p className="w-full text-center text-[24px] font-bold leading-tight text-slate-900 break-words">{employee.fullName}</p>
+      <p className="mt-1 w-full text-center text-[14px] text-slate-500 break-words">
         {employee.position} ({employee.departmentCode})
       </p>
 
@@ -157,7 +157,7 @@ export function TopPodium({ topThree, rankByEmployeeId }: TopPodiumProps) {
     <section className="mt-8 pb-2">
       <div className="mx-auto flex max-w-[900px] flex-col items-center gap-5 px-2 md:flex-row md:items-end md:justify-center md:gap-6">
         {second ? (
-          <div className="order-2 md:order-1">
+          <div className="order-2 w-full max-w-[280px] md:order-1">
             <TopCard employee={second} rank={rankByEmployeeId[second.id] ?? 0} place={2} />
           </div>
         ) : (
@@ -165,7 +165,7 @@ export function TopPodium({ topThree, rankByEmployeeId }: TopPodiumProps) {
         )}
 
         {first ? (
-          <div className="order-1 md:order-2">
+          <div className="order-1 w-full max-w-[280px] md:order-2">
             <TopCard employee={first} rank={rankByEmployeeId[first.id] ?? 0} place={1} />
           </div>
         ) : (
@@ -173,7 +173,7 @@ export function TopPodium({ topThree, rankByEmployeeId }: TopPodiumProps) {
         )}
 
         {third ? (
-          <div className="order-3 md:order-3">
+          <div className="order-3 w-full max-w-[280px] md:order-3">
             <TopCard employee={third} rank={rankByEmployeeId[third.id] ?? 0} place={3} />
           </div>
         ) : (
