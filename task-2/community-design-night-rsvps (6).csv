@@ -1,0 +1,6 @@
+﻿name,email,rsvp_status,check_in_time
+Attendee One,attendee1@example.com,going,2026-05-17T16:16:11.943364+00:00
+Attendee Two,attendee2@example.com,going,2026-05-21T15:21:06.523946+00:00
+Attendee Three,attendee3@example.com,going,
+Checker User,checker@example.com,cancelled,
+Attendee 4,attendee4@example.com,waitlist,
