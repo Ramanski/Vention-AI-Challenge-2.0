@@ -6,8 +6,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar, MapPin, Users, Flag, Upload, Star } from "lucide-react";
 import { fmtEventDate, isPast } from "@/lib/format";
 import { toast } from "sonner";
@@ -242,17 +240,7 @@ function EventDetail() {
 
           {event.description && <p className="mt-6 whitespace-pre-wrap leading-relaxed text-foreground/90">{event.description}</p>}
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border/60 bg-muted/30 p-4">
-            <div className="flex items-center gap-3">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex items-center gap-2"><Switch disabled checked={false} /><span className="text-sm text-muted-foreground">Paid tickets</span></div>
-                  </TooltipTrigger>
-                  <TooltipContent>Coming soon</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-4 rounded-xl border border-border/60 bg-muted/30 p-4">
             {past ? (
               <span className="text-sm text-muted-foreground">This event has ended.</span>
             ) : myRsvp && myRsvp.status !== "cancelled" ? (

@@ -445,6 +445,7 @@ function EventDialog({ hostId, event, open, onOpenChange, onSaved }: { hostId: s
   const [capacity, setCapacity] = useState<number>(event?.capacity ?? 50);
   const [visibility, setVisibility] = useState<"public" | "unlisted">(event?.visibility ?? "public");
   const [status, setStatus] = useState<"draft" | "published">(event?.status === "draft" ? "draft" : "published");
+  const [isPaid, setIsPaid] = useState(event?.is_paid ?? false);
   const [saving, setSaving] = useState(false);
   const timezones = getTimezones();
 
@@ -482,6 +483,7 @@ function EventDialog({ hostId, event, open, onOpenChange, onSaved }: { hostId: s
       capacity,
       visibility,
       status,
+      is_paid: false,
     };
 
     if (isEdit) {
@@ -571,17 +573,22 @@ function EventDialog({ hostId, event, open, onOpenChange, onSaved }: { hostId: s
             </Select>
           </div>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-2 rounded-md border border-border/60 p-3">
-                  <Switch disabled checked={false} />
-                  <span className="text-sm text-muted-foreground">Paid tickets</span>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>Coming soon</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <div className="space-y-1.5">
+            <Label>Pricing</Label>
+            <div className="flex gap-2">
+              <Button type="button" variant={!isPaid ? "default" : "outline"} size="sm" onClick={() => setIsPaid(false)}>Free</Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-flex cursor-default">
+                      <Button type="button" variant={isPaid ? "default" : "outline"} size="sm" disabled onClick={() => {}}>Paid</Button>
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>Coming soon</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </div>
 
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>

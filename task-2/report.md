@@ -46,6 +46,7 @@ The focus was on:
 - AI-assisted development significantly accelerated implementation.
 - RSVP, waitlist, and check-in flows worked reliably.
 - Shared operational flows reduced duplicated logic.
+- ChatGPT was especially helpful in diagnosing the likely technical root cause behind those failed or partial fixes and generating more precise, technically specific prompts for Lovable, which improved the reliability of subsequent implementations.
 
 ---
 
@@ -53,17 +54,15 @@ The focus was on:
 
 - Some generated pages produced React hook and routing issues that required additional debugging.
 - Generated UI sometimes introduced redundant actions or duplicated sections that needed cleanup.
+- In some cases, Lovable reported that a fix had been implemented successfully, but the actual UI behavior or rendered interface remained unchanged and required additional verification and follow-up fixes.
 - Lovable prompt usage costs encouraged more careful prompt engineering and smaller iterative changes.
-- Because of limited Lovable credits, ChatGPT was used extensively to:
-  - optimize prompts before sending them to Lovable
-  - reduce unnecessary iterations
-  - debug issues before spending additional credits
-  - prioritize MVP-safe implementation decisions
 
 ---
 
 # Notable Decisions
 
-- A single CSV export was used instead of separate RSVP and Attendance exports.
-- Moderation was implemented with lightweight Host-managed flows.
-- Stability and requirement coverage were prioritized over deep refactoring and advanced architecture.
+- Because of limited Lovable credits, ChatGPT was used extensively to:
+  - optimize prompts before sending them to Lovable
+  - reduce unnecessary iterations
+  - debug issues before spending additional credits
+  - prioritize MVP-safe implementation decisions

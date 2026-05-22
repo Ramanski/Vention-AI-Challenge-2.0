@@ -33,6 +33,8 @@ function ManageEventPage() {
     },
   });
 
+  const { data: reportedIds } = useOpenReportEventIds(event ? [event.id] : []);
+
   if (isLoading || membershipsLoading) {
     return <div className="mx-auto max-w-5xl px-4 py-12 text-sm text-muted-foreground">Loading…</div>;
   }
@@ -57,8 +59,8 @@ function ManageEventPage() {
     );
   }
 
-  const { data: reportedIds } = useOpenReportEventIds(event ? [event.id] : []);
   const hasOpenReports = !!reportedIds?.has(event.id);
+
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
