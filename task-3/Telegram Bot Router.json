@@ -14,7 +14,7 @@
       "typeVersion": 1.3,
       "position": [
         16,
-        784
+        660
       ],
       "webhookId": "ca2bddf2-81aa-4b7d-b9c8-b74efd7a6181",
       "credentials": {
@@ -187,7 +187,7 @@
       "typeVersion": 3.4,
       "position": [
         240,
-        704
+        580
       ]
     },
     {
@@ -204,7 +204,7 @@
       "typeVersion": 1.2,
       "position": [
         464,
-        80
+        -48
       ],
       "webhookId": "e7877966-ac92-45c4-ab34-7b34121353cf",
       "credentials": {
@@ -228,8 +228,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        464,
-        976
+        1360,
+        880
       ],
       "webhookId": "d777b75a-7aa7-4686-809d-5416e49959ea",
       "credentials": {
@@ -247,7 +247,7 @@
       "typeVersion": 2,
       "position": [
         1136,
-        208
+        96
       ],
       "id": "3c5022d6-cd50-43b2-92bb-c99df3778257",
       "name": "Extract URL"
@@ -265,7 +265,7 @@
       "typeVersion": 4.4,
       "position": [
         1584,
-        208
+        96
       ],
       "id": "5cc40283-75cd-4840-b982-8dab1d2b6817",
       "name": "HTTP Request",
@@ -286,8 +286,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2688,
-        480
+        2552,
+        440
       ],
       "id": "e7e96049-2ce4-4424-ac8b-21c2b842e473",
       "name": "OpenAI Chat Model",
@@ -305,8 +305,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1872,
-        112
+        1808,
+        96
       ],
       "id": "5ea29a5c-6dc1-4b8e-97e8-6470c0baa03c",
       "name": "Extract content from HTML"
@@ -318,11 +318,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2960,
-        256
+        2896,
+        248
       ],
       "id": "d5db2a8e-1a8d-42d8-baf1-0027f810fcc7",
-      "name": "Parse AI output"
+      "name": "Parse AI output",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -331,8 +332,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1952,
-        960
+        2968,
+        912
       ],
       "id": "e70c01c3-2d7b-4285-9bda-4fa7822b9d53",
       "name": "Structured Output Parser1"
@@ -350,8 +351,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        1824,
-        960
+        2840,
+        912
       ],
       "id": "aa9338dd-17f9-4b4a-be7c-5823d1d4bc30",
       "name": "OpenAI Chat Model1",
@@ -426,8 +427,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2672,
-        976
+        3632,
+        1092
       ],
       "id": "7c374b8c-9699-4a79-83e3-e47685a821dc",
       "name": "Send Question 1",
@@ -449,11 +450,12 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1808,
-        736
+        2832,
+        688
       ],
       "id": "bc31ed8d-8393-410d-aa77-a193766737a5",
-      "name": "Generate questions"
+      "name": "Generate questions",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -464,11 +466,12 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        2608,
-        256
+        2480,
+        216
       ],
       "id": "a80f67e3-1f80-44fe-acb8-0072022326c6",
-      "name": "Examine the material"
+      "name": "Examine the material",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -519,7 +522,7 @@
       "typeVersion": 2.2,
       "position": [
         3184,
-        256
+        200
       ],
       "id": "ae013b21-4ba5-40e5-91d1-81749fe9453e",
       "name": "Add to AI Materials",
@@ -598,8 +601,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2160,
-        736
+        3184,
+        948
       ],
       "id": "9db868c3-57fa-45f7-9f27-dc71273afff6",
       "name": "Add to Quizz Questions",
@@ -624,8 +627,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        1584,
-        736
+        2544,
+        688
       ],
       "id": "0de05eb7-3915-45b1-8a97-5c215c51c554",
       "name": "Getting AI material",
@@ -643,8 +646,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2384,
-        976
+        3408,
+        1092
       ],
       "id": "428e2699-5bdd-49e7-b44a-d0038343d875",
       "name": "Map first question"
@@ -656,11 +659,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        912,
-        1264
+        2896,
+        1452
       ],
       "id": "87db7997-f25b-48ce-8cf3-05bbdf6ae6bd",
-      "name": "Process answer"
+      "name": "Process answer",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -691,8 +695,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        688,
-        1264
+        2544,
+        1452
       ],
       "id": "cb405a93-ba60-4bef-9bc1-adc43bb8fdb8",
       "name": "Get Quizz session",
@@ -731,8 +735,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1872,
-        1392
+        3856,
+        1548
       ],
       "id": "8f5f10f2-7645-4c30-a656-39c651062cd9",
       "name": "Has next question?"
@@ -772,8 +776,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        1360,
-        1392
+        3408,
+        1548
       ],
       "id": "20964a3f-31f6-4480-b1f7-bb581c2deb79",
       "name": "Update question session",
@@ -848,8 +852,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2160,
-        1296
+        4080,
+        1452
       ],
       "id": "0da0fc42-eb4d-4bd2-8828-dad6c979a1bf",
       "name": "Send next question",
@@ -872,8 +876,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2160,
-        1488
+        4080,
+        1644
       ],
       "id": "fa1e0d9f-7ced-40e3-a6be-b31b2dfb75f7",
       "name": "Send a summary",
@@ -896,8 +900,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1584,
-        1392
+        3632,
+        1548
       ],
       "id": "fa30fabd-92f7-412a-bde0-e8f3743a4382",
       "name": "Send answer feedback",
@@ -920,8 +924,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        464,
-        1264
+        2256,
+        1452
       ],
       "id": "2c0b3f82-b40c-47b5-ace0-0996c986b750",
       "name": "Answer Query a callback",
@@ -941,8 +945,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        912,
-        976
+        1808,
+        880
       ],
       "id": "3ef25dbc-cb42-4dc2-80af-88c39fb27474",
       "name": "Typing...",
@@ -965,8 +969,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        688,
-        976
+        1584,
+        880
       ],
       "id": "2cf35f19-84fa-4d2c-a405-245fd3d96d68",
       "name": "Please, wait...",
@@ -1012,8 +1016,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        1136,
-        976
+        2032,
+        880
       ],
       "id": "1b2833f7-fa27-4cad-9b0e-7b85cb7fa32f",
       "name": "Try to get existing quizz",
@@ -1055,8 +1059,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1360,
-        976
+        2256,
+        880
       ],
       "id": "c2acc35e-abf3-42a5-9120-382538dc826b",
       "name": "Quizz exists?"
@@ -1094,8 +1098,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2160,
-        1104
+        3184,
+        1160
       ],
       "id": "0457aa92-eeac-4c50-9338-dea646c513c8",
       "name": "Update question session1",
@@ -1134,7 +1138,7 @@
       "typeVersion": 2.3,
       "position": [
         464,
-        496
+        372
       ],
       "id": "05b11738-f065-4137-a3fa-3f363265c664",
       "name": "Parameter provided?"
@@ -1151,7 +1155,7 @@
       "typeVersion": 1.2,
       "position": [
         688,
-        592
+        544
       ],
       "id": "42097bc9-4c25-4b78-9bdd-9e3d89f3a785",
       "name": "Please send an URL",
@@ -1192,7 +1196,7 @@
       "typeVersion": 2.3,
       "position": [
         912,
-        304
+        124
       ],
       "id": "8f7d6994-2f17-4f5b-9a43-c5bbf746d214",
       "name": "Is valid URL?"
@@ -1210,7 +1214,7 @@
       "typeVersion": 1.2,
       "position": [
         1136,
-        592
+        660
       ],
       "id": "d3aac39b-b884-4611-9a72-7bbf85ef00cc",
       "name": "This is not a valid URL",
@@ -1234,7 +1238,7 @@
       "typeVersion": 1.2,
       "position": [
         464,
-        1456
+        1596
       ],
       "id": "dbda1584-3ac8-4208-813d-5a90d51e6f4e",
       "name": "WTF",
@@ -1274,8 +1278,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2160,
-        112
+        2032,
+        96
       ],
       "id": "52342f71-be40-4645-911c-c8fa533d510d",
       "name": "Parsing failed?"
@@ -1317,8 +1321,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2384,
-        -48
+        2256,
+        24
       ],
       "id": "168d2c57-70d2-4e47-8d15-0425843369b8",
       "name": "Save failed URL",
@@ -1340,8 +1344,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2672,
-        -48
+        2544,
+        24
       ],
       "id": "edd66724-45fd-4a80-bf76-331f744fe339",
       "name": "Couldn't extract content",
@@ -1360,8 +1364,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1872,
-        448
+        1808,
+        540
       ],
       "id": "302e0ac0-4edc-40fe-9bb8-7ae75d330d2d",
       "name": "Normalize HTTP error response"
@@ -1402,8 +1406,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        2160,
-        448
+        2032,
+        540
       ],
       "id": "99497724-3e9e-4bc2-9d66-d2cf72b03d89",
       "name": "Create a database page",
@@ -1425,8 +1429,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2384,
-        448
+        2256,
+        540
       ],
       "id": "ef23b9cb-0814-4c53-90dd-002be324916c",
       "name": "Failed fetching HTTP",
@@ -1452,7 +1456,7 @@
       "typeVersion": 1.2,
       "position": [
         3408,
-        256
+        200
       ],
       "webhookId": "a5c225dd-320d-448f-88e6-6510d0d8377f",
       "credentials": {
@@ -1474,7 +1478,7 @@
       "typeVersion": 1.2,
       "position": [
         1360,
-        208
+        96
       ],
       "id": "d2611dc2-ff75-43b1-a483-a81565cfc63e",
       "name": "Loading URL",
@@ -1514,8 +1518,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1136,
-        1264
+        3184,
+        1500
       ],
       "id": "d0c4891a-ce29-44c3-b091-4b52d7c1724d",
       "name": "Is in progress?"
@@ -1531,8 +1535,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1360,
-        1168
+        3408,
+        1356
       ],
       "id": "a8ce0e74-f833-40e2-9415-dd7c115e9a8e",
       "name": "Already completed",
@@ -1555,8 +1559,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2384,
-        256
+        2256,
+        320
       ],
       "id": "fd3b72a5-f328-4933-8610-06453f308227",
       "name": "Processing by teacher",
@@ -1596,7 +1600,7 @@
       "typeVersion": 2.2,
       "position": [
         464,
-        784
+        736
       ],
       "id": "a0bd7e96-2f3b-4917-b48c-5b3378660824",
       "name": "Get AI materials created by user",
@@ -1616,7 +1620,7 @@
       "typeVersion": 2,
       "position": [
         688,
-        784
+        736
       ],
       "id": "67979292-2729-4763-b5c0-3d4e53226bab",
       "name": "Map topics"
@@ -1634,7 +1638,7 @@
       "typeVersion": 4.4,
       "position": [
         912,
-        784
+        736
       ],
       "id": "f237abf9-4d22-469f-bf5f-37ac01db04e4",
       "name": "Choose the topic to learn"
@@ -1658,10 +1662,85 @@
       "typeVersion": 3.4,
       "position": [
         688,
-        400
+        352
       ],
       "id": "02c2397c-4894-473f-953b-a53c6207ea47",
       "name": "Extract parameter"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message?.chat?.id ?? $('Telegram Trigger').item.json.callback_query?.message?.chat?.id }}",
+        "text": "=⚠️ Что-то пошло не так...\n\nПопробуйте ещё раз или используйте /start для перезапуска.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "aab370f2-a0be-45de-8c55-03771a7c3160",
+      "name": "Notify error to user",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3184,
+        584
+      ],
+      "webhookId": "81e50f19-5d85-44cc-96d5-35273944ae8b",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "370b5db0-38d3-8099-b086-fb2c80468b1c",
+          "mode": "list",
+          "cachedResultName": "Failed URLs",
+          "cachedResultUrl": "https://www.notion.so/370b5db038d38099b086fb2c80468b1c"
+        },
+        "title": "={{ \"Error: \" + ($json.error?.message ?? \"Unknown error\") }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Date|date",
+              "date": "={{ DateTime.now() }}"
+            },
+            {
+              "key": "Error code|rich_text",
+              "textContent": "={{ $json.error?.name ?? \"WORKFLOW_ERROR\" }}"
+            },
+            {
+              "key": "URL|rich_text",
+              "textContent": "={{ $json.error?.message ?? \"\" }}"
+            },
+            {
+              "key": "UserID|number",
+              "numberValue": "={{ $('Telegram Trigger').item.json.message?.from?.id ?? $('Telegram Trigger').item.json.callback_query?.from?.id ?? 0 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "29e17a11-6776-4352-a436-bcdb2bdb71cd",
+      "name": "Log error to Notion",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        3408,
+        584
+      ],
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "pinData": {},
@@ -1794,6 +1873,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Notify error to user",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -1827,6 +1913,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Notify error to user",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -1835,6 +1928,13 @@
         [
           {
             "node": "Parse AI output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify error to user",
             "type": "main",
             "index": 0
           }
@@ -1912,6 +2012,13 @@
         [
           {
             "node": "Is in progress?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify error to user",
             "type": "main",
             "index": 0
           }
@@ -2200,6 +2307,17 @@
           }
         ]
       ]
+    },
+    "Notify error to user": {
+      "main": [
+        [
+          {
+            "node": "Log error to Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -2210,7 +2328,7 @@
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
   },
-  "versionId": "d78521c6-6e96-42aa-8fd8-053cb262561f",
+  "versionId": "98ea384f-df96-40a4-8719-05a294c76376",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "e1f82ccaa1a2567464a950433958603c7cd93e333e7e7dd5e9c45600f1e2ce5c"
