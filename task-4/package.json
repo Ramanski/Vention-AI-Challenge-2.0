@@ -1,0 +1,12 @@
+{
+  "name": "airport-atc-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "zod": "^4.0.0"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  }
+}
