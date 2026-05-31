@@ -1,0 +1,2220 @@
+{
+  "name": "Telegram Bot Router",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ],
+        "additionalFields": {}
+      },
+      "id": "e4c36a72-5cab-4cf8-992d-e69cbd1fa07f",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        16,
+        784
+      ],
+      "webhookId": "ca2bddf2-81aa-4b7d-b9c8-b74efd7a6181",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.text }}",
+                    "rightValue": "/start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "ca1583a9-27f0-4a94-ae65-0371899f3288"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/start"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "74f83c0c-a94b-4dc3-b4d2-b703f7422170",
+                    "leftValue": "={{ $json.message.text.trim().startsWith(\"http\") }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "url"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.text }}",
+                    "rightValue": "/learn",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "f9b3130b-1601-40a0-9e88-23d4261358a8"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/learn"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message?.text }}",
+                    "rightValue": "/quiz",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e44de3be-8b15-4e74-918f-69eb73d13c25"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/quiz"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "bbd90a31-2716-4815-bd05-0c4a500855f6",
+                    "leftValue": "={{ $json.callback_query?.data?.startsWith('topic:') }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "callback topic"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "af2d91ee-0cc0-4e78-82fa-aa1f0639dbe6",
+                    "leftValue": "={{ $json.callback_query?.data?.startsWith('qa:') }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "question answer"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "26dae779-dafb-4371-9b5d-e9dc20de8ee1",
+      "name": "Router",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "=Привет! 👋\n\nОтправь /learn \\[url] чтобы я начал изучать статью по ссылке.\nПосле чего кликай /quiz чтобы проверить себя!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "b6b1c4d2-7772-4b9b-a6a4-dfe0680f7115",
+      "name": "Handle /start",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        80
+      ],
+      "webhookId": "e7877966-ac92-45c4-ab34-7b34121353cf",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "callback",
+        "queryId": "={{ $json.callback_query.id }}",
+        "additionalFields": {
+          "show_alert": false,
+          "text": "Topic selected. Preparing quiz..."
+        }
+      },
+      "id": "ed56d03c-e71f-4cd4-af72-f9269e6e9036",
+      "name": "Handle Callback",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        976
+      ],
+      "webhookId": "d777b75a-7aa7-4686-809d-5416e49959ea",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst updatedItems = items.map((item, index) => {\n  const url = item?.json?.message?.text?.match(\n    /(http|https):\\/\\/[\\w-]+(\\.[\\w-]+)+([\\w.,@?^=%&amp;:\\/~+#-]*[\\w@?^=%&amp;\\/~+#-])?/g,\n  );\n  return { json: { url: url ? url[0] : null }, pairedItem: index };\n});\nreturn updatedItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        208
+      ],
+      "id": "3c5022d6-cd50-43b2-92bb-c99df3778257",
+      "name": "Extract URL"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Extract URL').item.json.url}}",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1584,
+        208
+      ],
+      "id": "5cc40283-75cd-4840-b982-8dab1d2b6817",
+      "name": "HTTP Request",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2688,
+        480
+      ],
+      "id": "e7e96049-2ce4-4424-ac8b-21c2b842e473",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KIwGQgFw4Y8BWGXW",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const html =\n  $json.body ||\n  $json.data ||\n  $json.response ||\n  $json.html ||\n  '';\n\nif (!html || typeof html !== 'string') {\n  return [\n    {\n      json: {\n        success: false,\n        errorCode: 'EMPTY_HTML',\n        errorMessage: 'Page HTML is empty or not a string.',\n        title: '',\n        content: '',\n        contentLength: 0,\n      },\n    },\n  ];\n}\n\nfunction stripTags(input) {\n  return input\n    .replace(/<script[\\s\\S]*?<\\/script>/gi, ' ')\n    .replace(/<style[\\s\\S]*?<\\/style>/gi, ' ')\n    .replace(/<noscript[\\s\\S]*?<\\/noscript>/gi, ' ')\n    .replace(/<svg[\\s\\S]*?<\\/svg>/gi, ' ')\n    .replace(/<iframe[\\s\\S]*?<\\/iframe>/gi, ' ')\n    .replace(/<!--[\\s\\S]*?-->/g, ' ')\n    .replace(/<[^>]+>/g, ' ');\n}\n\nfunction decodeHtmlEntities(text) {\n  return text\n    .replace(/&nbsp;/g, ' ')\n    .replace(/&amp;/g, '&')\n    .replace(/&quot;/g, '\"')\n    .replace(/&#39;/g, \"'\")\n    .replace(/&apos;/g, \"'\")\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/&#8217;/g, \"'\")\n    .replace(/&#8220;/g, '\"')\n    .replace(/&#8221;/g, '\"')\n    .replace(/&#8211;/g, '–')\n    .replace(/&#8212;/g, '—');\n}\n\nfunction cleanText(text) {\n  return decodeHtmlEntities(text)\n    .replace(/\\r/g, '\\n')\n    .replace(/\\t/g, ' ')\n    .replace(/[ ]{2,}/g, ' ')\n    .replace(/\\n[ ]+/g, '\\n')\n    .replace(/[ ]+\\n/g, '\\n')\n    .replace(/\\n{3,}/g, '\\n\\n')\n    .trim();\n}\n\nfunction extractTitle(html) {\n  const h1Match = html.match(/<h1[^>]*>([\\s\\S]*?)<\\/h1>/i);\n  if (h1Match) {\n    return cleanText(stripTags(h1Match[1]));\n  }\n\n  const titleMatch = html.match(/<title[^>]*>([\\s\\S]*?)<\\/title>/i);\n  if (titleMatch) {\n    return cleanText(stripTags(titleMatch[1]));\n  }\n\n  return 'Untitled';\n}\n\nfunction extractByTag(html, tagName) {\n  const regex = new RegExp(`<${tagName}[^>]*>([\\\\s\\\\S]*?)<\\\\/${tagName}>`, 'gi');\n  const blocks = [];\n  let match;\n\n  while ((match = regex.exec(html)) !== null) {\n    const text = cleanText(stripTags(match[1]));\n\n    if (\n      text.length >= 25 &&\n      !/^menu$/i.test(text) &&\n      !/^contact us$/i.test(text) &&\n      !/^careers$/i.test(text) &&\n      !/^skip to content$/i.test(text)\n    ) {\n      blocks.push(text);\n    }\n  }\n\n  return blocks;\n}\n\nfunction extractArticleArea(html) {\n  const candidates = [];\n\n  const articleMatch = html.match(/<article[^>]*>([\\s\\S]*?)<\\/article>/i);\n  if (articleMatch) {\n    candidates.push(articleMatch[1]);\n  }\n\n  const mainMatch = html.match(/<main[^>]*>([\\s\\S]*?)<\\/main>/i);\n  if (mainMatch) {\n    candidates.push(mainMatch[1]);\n  }\n\n  const postContentMatch = html.match(/<div[^>]+class=[\"'][^\"']*(post-content|entry-content|blog-content|content-area|single-post)[^\"']*[\"'][^>]*>([\\s\\S]*?)<\\/div>/i);\n  if (postContentMatch) {\n    candidates.push(postContentMatch[0]);\n  }\n\n  candidates.push(html);\n\n  let best = '';\n  let bestLength = 0;\n\n  for (const candidate of candidates) {\n    const blocks = [\n      ...extractByTag(candidate, 'h1'),\n      ...extractByTag(candidate, 'h2'),\n      ...extractByTag(candidate, 'h3'),\n      ...extractByTag(candidate, 'p'),\n      ...extractByTag(candidate, 'li'),\n    ];\n\n    const text = cleanText(blocks.join('\\n\\n'));\n\n    if (text.length > bestLength) {\n      best = text;\n      bestLength = text.length;\n    }\n  }\n\n  return best;\n}\n\nconst title = extractTitle(html);\nlet content = extractArticleArea(html);\n\ncontent = content\n  .replace(/Skip to content/gi, '')\n  .replace(/MENU/gi, '')\n  .replace(/Contact us/gi, '')\n  .replace(/Careers/gi, '')\n  .replace(/\\bShare this article\\b/gi, '')\n  .replace(/\\bRelated Articles\\b/gi, '');\n\ncontent = cleanText(content);\n\nconst maxLength = 15000;\nconst limitedContent = content.slice(0, maxLength).trim();\n\nif (limitedContent.length < 500) {\n  return [\n    {\n      json: {\n        success: false,\n        errorCode: 'CONTENT_TOO_SHORT',\n        errorMessage: 'Parsed page content is too short.',\n        title,\n        content: limitedContent,\n        contentLength: limitedContent.length,\n      },\n    },\n  ];\n}\n\nreturn [\n  {\n    json: {\n      success: true,\n      errorCode: '',\n      errorMessage: '',\n      title,\n      content: limitedContent,\n      contentLength: limitedContent.length,\n      originalContentLength: content.length,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1872,
+        112
+      ],
+      "id": "5ea29a5c-6dc1-4b8e-97e8-6470c0baa03c",
+      "name": "Extract content from HTML"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawOutput =\n  $json.output ??\n  $json.text ??\n  $json.response ??\n  $json.result ??\n  '';\n\nif (!rawOutput || typeof rawOutput !== 'string') {\n  throw new Error('AI output is empty or not a string');\n}\n\nlet cleaned = rawOutput.trim();\n\ncleaned = cleaned\n  .replace(/^```json\\s*/i, '')\n  .replace(/^```\\s*/i, '')\n  .replace(/```$/i, '')\n  .trim();\n\nlet parsed;\n\ntry {\n  parsed = JSON.parse(cleaned);\n} catch (error) {\n  throw new Error(`Failed to parse AI JSON: ${error.message}. Raw output: ${rawOutput}`);\n}\n\nreturn {\n  json: {\n    title: parsed.title ?? '',\n    keyPoints: Array.isArray(parsed.keyPoints) ? parsed.keyPoints : [],\n    mainConcepts: Array.isArray(parsed.mainConcepts) ? parsed.mainConcepts : [],\n    difficulty: parsed.difficulty ?? '',\n    keyPointsText: Array.isArray(parsed.keyPoints) ? parsed.keyPoints.join('\\n') : '',\n    mainConceptsText: Array.isArray(parsed.mainConcepts) ? parsed.mainConcepts.join('\\n') : '',\n    rawAiJson: parsed,\n    savedAt: new Date().toISOString(),\n  },\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2960,
+        256
+      ],
+      "id": "d5db2a8e-1a8d-42d8-baf1-0027f810fcc7",
+      "name": "Parse AI output"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"questions\": [\n    {\n      \"id\": \"Q1\",\n      \"question\": \"...\",\n      \"options\": [\n        \"...\",\n        \"...\",\n        \"...\",\n        \"...\"\n      ],\n      \"correctOptionIndex\": \"0\",\n      \"explanation\": \"...\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1952,
+        960
+      ],
+      "id": "e70c01c3-2d7b-4285-9bda-4fa7822b9d53",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1824,
+        960
+      ],
+      "id": "aa9338dd-17f9-4b4a-be7c-5823d1d4bc30",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "KIwGQgFw4Y8BWGXW",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "messageId": "={{ $('Please, wait...').item.json.result.message_id }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "={{ [\n'🚀 Квиз готов. Посмотрим, что запомнилось.',\n'🎓 Экзамен начинается. Шпаргалки оставляем за дверью.',\n'⚔️ Время проверить свои знания.',\n'🧠 Мозг разогрет? Поехали.',\n'📋 Пять вопросов отделяют тебя от результата.',\n][Math.floor(Math.random() * 5)]}}\n\n{{ $json.text }}",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[0][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[0][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[1][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[1][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[2][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[2][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $json.reply_markup.inline_keyboard[3][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $json.reply_markup.inline_keyboard[3][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2672,
+        976
+      ],
+      "id": "7c374b8c-9699-4a79-83e3-e47685a821dc",
+      "name": "Send Question 1",
+      "webhookId": "7274530e-5815-4077-863e-6e5acdd604e1",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are the Examiner agent in a personal learning assistant.\n\nGenerate exactly 5 multiple-choice quiz questions based only on the provided learning material.\n\nYour goal is to test whether the user understood the material, not to test general knowledge.\n\nImportant process:\n1. First understand the main topic and key learning points.\n2. Create a question based on one specific key point or concept.\n3. Decide the correct answer.\n4. Create 3 plausible but clearly incorrect options.\n5. Shuffle the 4 options.\n6. Set correctOptionIndex to the actual index of the correct answer after shuffling.\n\nRules:\n- Use only the provided learning material.\n- Do not invent facts.\n- Do not use outside knowledge.\n- Generate exactly 5 questions.\n- Questions must be specific to the material.\n- Do not create generic questions.\n- Do not ask about trivial wording or formatting.\n- Each question must have exactly 4 options.\n- Only one option must be correct\n- Distribute correctOptionIndex across different positions.\n- Option length must be maximum 30 characters.\n- Question length must be maximum 200 characters.\n- Explanation must briefly explain why the selected option is correct.\n- Return only valid JSON.\n- Do not use Markdown.\n- Do not add comments before or after JSON.\n\nFormat:\n{\n  \"questions\": [\n    {\n      \"id\": \"...\",\n      \"question\": \"...\",\n      \"options\": [\n        \"...\",\n        \"...\",\n        \"...\",\n        \"...\"\n      ],\n      \"correctOptionIndex\": \"...\",\n      \"explanation\": \"...\"\n    }\n  ]\n}\n\nLearning material:\nTitle: {{ $json.name }}\nKey points: {{ $json.property_key_points }}\nMain concepts: {{ $json.property_main_concepts }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1808,
+        736
+      ],
+      "id": "bc31ed8d-8393-410d-aa77-a193766737a5",
+      "name": "Generate questions"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are the Teacher agent in a personal learning assistant.\n\nYour job is to analyze ONLY the provided learning material and create a structured learning summary.\n\nThe material may contain irrelevant text such as navigation menus, cookie banners, ads, author bio, related articles, newsletter blocks, repeated headings, footer content, social media links, comments, or unrelated recommendations.\n\nYou must ignore irrelevant and boilerplate content.\n\nImportant reasoning process:\n1. First, understand the overall topic of the material.\n2. Identify the central idea or main learning goal.\n3. Then extract only the key points and concepts that directly support this main idea.\n4. Exclude random facts, side notes, unrelated examples, and details that do not help explain the main topic.\n\nStrict rules:\n- Use only the provided material.\n- Do not invent facts.\n- Do not add outside knowledge.\n- Do not include unsupported information.\n- If the text is noisy, focus only on the coherent article-like content.\n- Key points must be specific, useful, and directly relevant to the main topic.\n- Main concepts must be short terms or phrases, not full explanations.\n- Avoid generic concepts unless they are the actual topic.\n- Return only valid JSON.\n- Do not use Markdown.\n- Do not add comments before or after JSON.\n\nOutput requirements:\n- title: the best title of the article/material. If no clear title exists, create a concise title based only on the main topic.\n- keyPoints: 5 to 7 concise learning points directly related to the central idea.\n- mainConcepts: 4 to 8 important concepts from the material.\n- difficulty: one of \"beginner\", \"intermediate\", or \"advanced\".\n\nDifficulty rules:\n- beginner: introductory material, basic concepts, simple explanations, no deep technical details.\n- intermediate: requires some prior knowledge, includes processes, comparisons, implementation steps, or practical details.\n- advanced: includes complex architecture, deep technical details, expert-level implementation, or specialized terminology.\n\nReturn JSON exactly in this format:\n{\n  \"title\": \"...\",\n  \"keyPoints\": [\n    \"...\",\n    \"...\",\n    \"...\",\n    \"...\",\n    \"...\"\n  ],\n  \"mainConcepts\": [\n    \"...\",\n    \"...\",\n    \"...\",\n    \"...\"\n  ],\n  \"difficulty\": \"beginner\"\n}\n\nLearning material:\n{{$('Extract content from HTML').item.json.content}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2608,
+        256
+      ],
+      "id": "a80f67e3-1f80-44fe-acb8-0072022326c6",
+      "name": "Examine the material"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "36bb5db0-38d3-8011-aee1-d51c7669c66c",
+          "mode": "list",
+          "cachedResultName": "AI Materials",
+          "cachedResultUrl": "https://www.notion.so/36bb5db038d38011aee1d51c7669c66c"
+        },
+        "title": "={{ $json.title }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Name|title",
+              "title": "={{ $json.title }}"
+            },
+            {
+              "key": "Difficulty|select",
+              "selectValue": "={{ $json.difficulty }}"
+            },
+            {
+              "key": "Key Points|rich_text",
+              "textContent": "={{ $json.keyPointsText }}"
+            },
+            {
+              "key": "Main Concepts|rich_text",
+              "textContent": "={{ $json.mainConceptsText }}"
+            },
+            {
+              "key": "Saved At|date",
+              "date": "={{ $json.savedAt }}"
+            },
+            {
+              "key": "UserId|number",
+              "numberValue": "={{ $('Router').item.json.message.from.id }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        3184,
+        256
+      ],
+      "id": "ae013b21-4ba5-40e5-91d1-81749fe9453e",
+      "name": "Add to AI Materials",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "370b5db0-38d3-8016-9095-cc5a4c6b2eaa",
+          "mode": "list",
+          "cachedResultName": "Quiz Sessions",
+          "cachedResultUrl": "https://www.notion.so/370b5db038d380169095cc5a4c6b2eaa"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Session ID|title",
+              "title": "=session_{{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}_{{ $('Getting AI material').item.json.id.slice(0, 8) }}_{{ DateTime.now().toMillis() }}"
+            },
+            {
+              "key": "Chat ID|number",
+              "numberValue": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}"
+            },
+            {
+              "key": "Current Question Index|number"
+            },
+            {
+              "key": "Material ID|rich_text",
+              "textContent": "={{ $('Getting AI material').item.json.id }}"
+            },
+            {
+              "key": "Topic Title|rich_text",
+              "textContent": "={{ $('Getting AI material').item.json.name }}"
+            },
+            {
+              "key": "User ID|number",
+              "numberValue": "={{ $('Telegram Trigger').item.json.callback_query.message.from.id }}"
+            },
+            {
+              "key": "Questions JSON|rich_text",
+              "textContent": "={{ $json.output.questions.toJsonString() }}"
+            },
+            {
+              "key": "Answers JSON|rich_text",
+              "textContent": "[]"
+            },
+            {
+              "key": "Current Question Index|number"
+            },
+            {
+              "key": "Correct Answers|number"
+            },
+            {
+              "key": "Total Questions|number",
+              "numberValue": "={{ $json.output.questions.length }}"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "Active"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2160,
+        736
+      ],
+      "id": "9db868c3-57fa-45f7-9f27-dc71273afff6",
+      "name": "Add to Quizz Questions",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "get",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Telegram Trigger').item.json.callback_query.data.replace('topic:', '') }}",
+          "mode": "id"
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1584,
+        736
+      ],
+      "id": "0de05eb7-3915-45b1-8a97-5c215c51c554",
+      "name": "Getting AI material",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $input.first().json;\n\nconst sessionId = source.property_session_id;\nconst chatId = source.property_chat_id;\nconst questionIndex = $input.first().json.property_current_question_index || 0;\nconst totalQuestions = Number($input.first().json.property_total_questions);\nconst question = JSON.parse($input.first().json.property_questions_json)[0];\n\nif (!question) {\n  throw new Error(\"currentQuestion is missing.\");\n}\n\nconst letters = [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"];\n\nconst inlineKeyboard = question.options.map((option, optionIndex) => {\n  return [\n    {\n      text: `${letters[optionIndex]})  ${option}`,\n      callback_data: `qa:${sessionId}:${questionIndex}:${optionIndex}`\n    }\n  ];\n});\n\nreturn [\n  {\n    json: {\n      chat_id: chatId,\n      text: `❓ Вопрос ${questionIndex + 1} из ${totalQuestions}\\n\\n${question.question}`,\n      reply_markup: {\n        inline_keyboard: inlineKeyboard\n      }\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2384,
+        976
+      ],
+      "id": "428e2699-5bdd-49e7-b44a-d0038343d875",
+      "name": "Map first question"
+    },
+    {
+      "parameters": {
+        "jsCode": "const sessionId = $input.first().json.property_session_id;\nconst chatId = $input.first().json.property_chat_id;\nconst questionIndex = Number($input.first().json.property_current_question_index);\nconst selectedOptionIndex = Number($(\"Telegram Trigger\").first().json.callback_query.data.split(\":\")[3]);\n\nconst status = String($input.first().json.property_status || \"Active\");\n\nif (status !== \"Active\") {\n  return [\n    {\n      json: {\n        sessionId,\n        chatId,\n        shouldUpdateSession: false,\n        feedbackText: \"This quiz is already completed.\",\n        hasNextQuestion: false,\n        summaryText: null\n      }\n    }\n  ];\n}\n\nconst questionsJson = $input.first().json.property_questions_json;\nconst answersJson = $input.first().json.property_answers_json || \"[]\";\n\nconst questions = JSON.parse(questionsJson);\nconst answers = JSON.parse(answersJson);\n\nconst totalQuestions = questions.length;\nconst question = questions[questionIndex];\n\nif (!question) {\n  throw new Error(`Question not found at index ${questionIndex}.`);\n}\n\nconst alreadyAnswered = answers.some(answer => {\n  return Number(answer.questionIndex) === questionIndex;\n});\n\nif (alreadyAnswered) {\n  return [\n    {\n      json: {\n        sessionId,\n        chatId,\n        shouldUpdateSession: false,\n        feedbackText: \"This question has already been answered.\",\n        hasNextQuestion: false,\n        summaryText: null\n      }\n    }\n  ];\n}\n\nconst correctOptionIndex = Number(question.correctOptionIndex);\nconst isCorrect = selectedOptionIndex === correctOptionIndex;\n\nconst selectedAnswerText = String(question.options[selectedOptionIndex]);\nconst correctAnswerText = String(question.options[correctOptionIndex]);\n\nanswers.push({\n  questionIndex,\n  selectedOptionIndex,\n  correctOptionIndex,\n  isCorrect\n});\n\nconst previousCorrectAnswers = Number($input.first().json.property_correct_answers || 0);\nconst correctAnswers = previousCorrectAnswers + (isCorrect ? 1 : 0);\n\nconst nextQuestionIndex = questionIndex + 1;\nconst hasNextQuestion = nextQuestionIndex < totalQuestions;\n\nconst newStatus = hasNextQuestion ? \"Active\" : \"Completed\";\n\nlet feedbackText;\n\nif (isCorrect) {\n  feedbackText = ['✅ Отлично!',\n'🎯 Точное попадание.',\n'🧠 Память пока работает без нареканий.',\n'👏 Учитель одобрительно кивает.',\n'🏆 Этот вопрос повержен.'][Math.floor(Math.random() * 5)];\n} else {\n  feedbackText =\n    ['❌ Почти получилось.',\n'🤔 Хорошая попытка, но есть нюанс...',\n'📚 Статья смотрит на тебя с лёгким осуждением.',\n'😅 Examiner оказался хитрее.',\n'🧠 Запишем это в раздел «повторить позже».'][Math.floor(Math.random() * 5)] +\n    `\\n\\n` +\n    `Твой ответ: ${selectedAnswerText}\\n` +\n    `Верный ответ: ${correctAnswerText}\\n\\n` +\n    `${question.explanation}`;\n}\n\nlet nextQuestionMessage = null;\n\nif (hasNextQuestion) {\n  const nextQuestion = questions[nextQuestionIndex];\n  const letters = [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"];\n\n  const inlineKeyboard = nextQuestion.options.map((option, optionIndex) => {\n    return [\n      {\n        text: `${letters[optionIndex]}) ${option}`,\n        callback_data: `qa:${sessionId}:${nextQuestionIndex}:${optionIndex}`\n      }\n    ];\n  });\n\n  nextQuestionMessage = {\n    chat_id: chatId,\n    text: `❓ Вопрос ${nextQuestionIndex + 1} из ${totalQuestions}\\n\\n${nextQuestion.question}`,\n    reply_markup: {\n      inline_keyboard: inlineKeyboard\n    }\n  };\n}\n\nconst scorePercent = Math.round((correctAnswers / totalQuestions) * 10) || 1;\n\nconst summaryText =\n  `🎉 Экзамен завершён!\\n\\n` +\n  `🏆 Результаты готовы: ${correctAnswers}/${totalQuestions} верных ответов\\n` +\n  `🎯 Оценка: ${scorePercent} балла(ов)`;\n\nreturn [\n  {\n    json: {\n      sessionId,\n      chatId,\n\n      shouldUpdateSession: true,\n\n      updatedAnswersJson: JSON.stringify(answers),\n      updatedCorrectAnswers: correctAnswers,\n      updatedCurrentQuestionIndex: nextQuestionIndex,\n      updatedStatus: newStatus,\n\n      feedbackText,\n      hasNextQuestion,\n      nextQuestionMessage,\n      summaryText: hasNextQuestion ? null : summaryText\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        1264
+      ],
+      "id": "87db7997-f25b-48ce-8cf3-05bbdf6ae6bd",
+      "name": "Process answer"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "370b5db0-38d3-8016-9095-cc5a4c6b2eaa",
+          "mode": "list",
+          "cachedResultName": "Quiz Sessions",
+          "cachedResultUrl": "https://www.notion.so/370b5db038d380169095cc5a4c6b2eaa"
+        },
+        "limit": 1,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Session ID|title",
+              "condition": "equals",
+              "titleValue": "={{ $('Telegram Trigger').item.json.callback_query.data.split(\":\")[1] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        1264
+      ],
+      "id": "cb405a93-ba60-4bef-9bc1-adc43bb8fdb8",
+      "name": "Get Quizz session",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a2d81bfa-f23a-4450-a6a5-d796f24853d4",
+              "leftValue": "={{ $('Process answer').item.json.hasNextQuestion }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1872,
+        1392
+      ],
+      "id": "8f5f10f2-7645-4c30-a656-39c651062cd9",
+      "name": "Has next question?"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get Quizz session').item.json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Answers JSON|rich_text",
+              "textContent": "={{ $json.updatedAnswersJson }}"
+            },
+            {
+              "key": "Correct Answers|number",
+              "numberValue": "={{ $json.updatedCorrectAnswers }}"
+            },
+            {
+              "key": "Current Question Index|number",
+              "numberValue": "={{ $json.updatedCurrentQuestionIndex }}"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "={{ $json.updatedStatus }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        1392
+      ],
+      "id": "20964a3f-31f6-4480-b1f7-bb581c2deb79",
+      "name": "Update question session",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Process answer').item.json.nextQuestionMessage.chat_id }}",
+        "text": "={{ $('Process answer').item.json.nextQuestionMessage.text }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[0][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[0][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[1][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[1][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[2][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[2][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[3][0].text }}",
+                    "additionalFields": {
+                      "callback_data": "={{ $('Process answer').item.json.nextQuestionMessage.reply_markup.inline_keyboard[3][0].callback_data }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2160,
+        1296
+      ],
+      "id": "0da0fc42-eb4d-4bd2-8828-dad6c979a1bf",
+      "name": "Send next question",
+      "webhookId": "e2a073ed-6071-42ff-95c0-c1956bac2bf8",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Process answer').item.json.chatId }}",
+        "text": "={{ $('Process answer').item.json.summaryText }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2160,
+        1488
+      ],
+      "id": "fa1e0d9f-7ced-40e3-a6be-b31b2dfb75f7",
+      "name": "Send a summary",
+      "webhookId": "0eb4db45-4152-4e3a-813d-38f7fa7d423c",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Process answer').item.json.chatId }}",
+        "text": "={{ $('Process answer').item.json.feedbackText }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1584,
+        1392
+      ],
+      "id": "fa30fabd-92f7-412a-bde0-e8f3743a4382",
+      "name": "Send answer feedback",
+      "webhookId": "9fcc0c06-9f1e-417e-8542-664d2fad940f",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "callback",
+        "queryId": "={{ $json.callback_query.id }}",
+        "additionalFields": {
+          "text": "Просчитываем ответ..."
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        1264
+      ],
+      "id": "2c0b3f82-b40c-47b5-ace0-0996c986b750",
+      "name": "Answer Query a callback",
+      "webhookId": "0872d944-ea85-40d3-8892-e17f10765709",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        976
+      ],
+      "id": "3ef25dbc-cb42-4dc2-80af-88c39fb27474",
+      "name": "Typing...",
+      "webhookId": "84aa605b-712f-4869-8264-9f05358cf291",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Telegram Trigger').item.json.callback_query.message.chat.id }}",
+        "messageId": "={{ $('Telegram Trigger').item.json.callback_query.message.message_id }}",
+        "text": "={{ [\n  '😈 Экзаменатор готовит каверзные вопросы...',\n  '📝 Генерирую квиз без права на списывание...',\n  '🎯 Проверяю, что действительно запомнилось...',\n  '⚔️ Выпускаю экзаменатора на охоту за пробелами в знаниях...',\n  '📚 Превращаю статью в интеллектуальную ловушку...'\n][Math.floor(Math.random() * 5)]}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        976
+      ],
+      "id": "2cf35f19-84fa-4d2c-a405-245fd3d96d68",
+      "name": "Please, wait...",
+      "webhookId": "15fb644f-006b-4306-b682-90c3b326a846",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "370b5db0-38d3-8016-9095-cc5a4c6b2eaa",
+          "mode": "list",
+          "cachedResultName": "Quiz Sessions",
+          "cachedResultUrl": "https://www.notion.so/370b5db038d380169095cc5a4c6b2eaa"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Material ID|rich_text",
+              "condition": "equals",
+              "richTextValue": "={{ $('Telegram Trigger').item.json.callback_query.data.replace('topic:', '') }}"
+            },
+            {
+              "key": "User ID|number",
+              "condition": "equals",
+              "numberValue": "={{ $('Telegram Trigger').item.json.callback_query.message.from.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        976
+      ],
+      "id": "1b2833f7-fa27-4cad-9b0e-7b85cb7fa32f",
+      "name": "Try to get existing quizz",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2b84da03-c3ea-4665-b8d0-4d391d8e111a",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1360,
+        976
+      ],
+      "id": "c2acc35e-abf3-42a5-9120-382538dc826b",
+      "name": "Quizz exists?"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Answers JSON|rich_text",
+              "textContent": "[]"
+            },
+            {
+              "key": "Correct Answers|number"
+            },
+            {
+              "key": "Current Question Index|number"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "Active"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2160,
+        1104
+      ],
+      "id": "0457aa92-eeac-4c50-9338-dea646c513c8",
+      "name": "Update question session1",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "90419f07-45b8-42d3-bc25-66e713731b03",
+              "leftValue": "={{ $json.message.text.trim() }}",
+              "rightValue": "/learn",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        464,
+        496
+      ],
+      "id": "05b11738-f065-4137-a3fa-3f363265c664",
+      "name": "Parameter provided?"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Please send an URL to the article",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        592
+      ],
+      "id": "42097bc9-4c25-4b78-9bdd-9e3d89f3a785",
+      "name": "Please send an URL",
+      "webhookId": "2fdab40a-5716-415d-b7a2-fc1716e5f1e3",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0f942e67-2d9a-4cc1-b107-f042063a0326",
+              "leftValue": "={{ /^https?:\\/\\/[^\\s/$.?#].[^\\s]*$/i.test(String($json.message.text.trim() || '').trim()) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        912,
+        304
+      ],
+      "id": "8f7d6994-2f17-4f5b-9a43-c5bbf746d214",
+      "name": "Is valid URL?"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "⚠️ Хм... Это совсем не похоже на ссылку.  Попробуйте ещё раз и убедитесь, что URL начинается с http:// или https://",
+        "additionalFields": {
+          "appendAttribution": false,
+          "reply_to_message_id": "={{ $json.message.message_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1136,
+        592
+      ],
+      "id": "d3aac39b-b884-4611-9a72-7bbf85ef00cc",
+      "name": "This is not a valid URL",
+      "webhookId": "8b56f7b7-4009-44fc-a27e-0a383c1af3c0",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "I didn't get it.",
+        "additionalFields": {
+          "reply_to_message_id": "={{ $('Telegram Trigger').item.json.message.message_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        1456
+      ],
+      "id": "dbda1584-3ac8-4208-813d-5a90d51e6f4e",
+      "name": "WTF",
+      "webhookId": "d919e4d8-0747-4bb8-8dc7-76a88b174cf6",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b33c7c40-f6fa-4215-b922-7e4f2335a74a",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2160,
+        112
+      ],
+      "id": "52342f71-be40-4645-911c-c8fa533d510d",
+      "name": "Parsing failed?"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "370b5db0-38d3-8099-b086-fb2c80468b1c",
+          "mode": "list",
+          "cachedResultName": "Failed URLs",
+          "cachedResultUrl": "https://www.notion.so/370b5db038d38099b086fb2c80468b1c"
+        },
+        "title": "={{ $json.title }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "URL|rich_text",
+              "textContent": "={{ $('Extract URL').item.json.url }}"
+            },
+            {
+              "key": "UserID|number",
+              "numberValue": "={{ $('Telegram Trigger').item.json.message.from.id }}"
+            },
+            {
+              "key": "Date|date",
+              "date": "={{ DateTime.now() }}"
+            },
+            {
+              "key": "Error code|rich_text",
+              "textContent": "={{ $json.errorCode }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2384,
+        -48
+      ],
+      "id": "168d2c57-70d2-4e47-8d15-0425843369b8",
+      "name": "Save failed URL",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "messageId": "={{ $('Telegram Trigger').item.json.message.message_id }}",
+        "text": "=I couldn’t extract enough useful content from this page :(\nReason: {{ $('Parsing failed?').item.json.errorMessage }}\nBut don't worry.\nThe issue is reported and will be verified by the developer very soon :)",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2672,
+        -48
+      ],
+      "id": "edd66724-45fd-4a80-bf76-331f744fe339",
+      "name": "Couldn't extract content",
+      "webhookId": "44629d84-639e-4e6e-940b-0aa9e9871ee0",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\n\nconst url = item.url || item.requestUrl || item.originalUrl || '';\n\nconst statusCode =\n  item.error?.status ||\n  item.error?.statusCode ||\n  item.statusCode ||\n  item.status ||\n  item.response?.statusCode ||\n  item.response?.status ||\n  null;\n\nconst body =\n  item.body ||\n  item.data ||\n  item.response?.body ||\n  item.response?.data ||\n  item.response ||\n  '';\n\nconst errorMessage =\n  item.error?.message ||\n  item.message ||\n  item.cause?.message ||\n  '';\n\nconst hasBody =\n  typeof body === 'string'\n    ? body.trim().length > 0\n    : body !== null && body !== undefined && Object.keys(body).length > 0;\n\nlet httpSuccess = true;\nlet errorCode = '';\nlet userMessage = '';\n\nif (statusCode && statusCode >= 400) {\n  httpSuccess = false;\n\n  if (statusCode === 400) {\n    errorCode = 'HTTP_400_BAD_REQUEST';\n    userMessage = '⚠️ Сайт не понял наш запрос. Похоже, ссылка немного капризничает.\\n\\nПроверьте URL или отправьте другую ссылку.';\n  } else if (statusCode === 401) {\n    errorCode = 'HTTP_401_UNAUTHORIZED';\n    userMessage = '🔐 Эта страница требует авторизацию.\\n\\nЯ пока не умею заходить в закрытые комнаты, поэтому отправьте публичную ссылку или вставьте текст вручную.';\n  } else if (statusCode === 403) {\n    errorCode = 'HTTP_403_FORBIDDEN';\n    userMessage = '🚧 Сайт не пустил меня внутрь.\\n\\nПохоже, страница блокирует автоматический доступ. Отправьте другую ссылку или вставьте текст вручную.';\n  } else if (statusCode === 404) {\n    errorCode = 'HTTP_404_NOT_FOUND';\n    userMessage = '🕵️ Я отправился на поиски статьи, но нашёл только пустоту.\\n\\nПроверьте ссылку и отправьте её ещё раз.';\n  } else if (statusCode === 408) {\n    errorCode = 'HTTP_408_TIMEOUT';\n    userMessage = '⏳ Сайт слишком долго думал и не ответил вовремя.\\n\\nПопробуйте ещё раз чуть позже или отправьте другую ссылку.';\n  } else if (statusCode === 429) {\n    errorCode = 'HTTP_429_RATE_LIMITED';\n    userMessage = '🐌 Сайт решил, что запросов слишком много, и попросил нас притормозить.\\n\\nПопробуйте позже или отправьте другую ссылку.';\n  } else if (statusCode >= 500) {\n    errorCode = 'HTTP_5XX_SERVER_ERROR';\n    userMessage = '🔥 У сайта что-то пошло не так на его стороне.\\n\\nЯ тут ни при чём, честно. Попробуйте позже или отправьте другую ссылку.';\n  } else {\n    errorCode = `HTTP_${statusCode}`;\n    userMessage = '⚠️ Не получилось загрузить эту страницу.\\n\\nПроверьте ссылку или отправьте другой URL.';\n  }\n} else if (errorMessage) {\n  httpSuccess = false;\n  errorCode = 'HTTP_REQUEST_FAILED';\n  userMessage = '📡 Я попытался добраться до страницы, но связь не сложилась.\\n\\nПроверьте ссылку или отправьте другой URL.';\n} else if (!hasBody) {\n  httpSuccess = false;\n  errorCode = 'EMPTY_HTTP_BODY';\n  userMessage = '📭 Страница открылась, но полезного текста внутри я не нашёл.\\n\\nОтправьте другую ссылку или вставьте текст вручную.';\n}\n\nreturn [\n  {\n    json: {\n      ...item,\n      url,\n      statusCode,\n      body,\n      httpSuccess,\n      errorCode,\n      errorMessage,\n      userMessage,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1872,
+        448
+      ],
+      "id": "302e0ac0-4edc-40fe-9bb8-7ae75d330d2d",
+      "name": "Normalize HTTP error response"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "370b5db0-38d3-8099-b086-fb2c80468b1c",
+          "mode": "list",
+          "cachedResultName": "Failed URLs",
+          "cachedResultUrl": "https://www.notion.so/370b5db038d38099b086fb2c80468b1c"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Date|date",
+              "date": "={{ DateTime.now() }}"
+            },
+            {
+              "key": "Error code|rich_text",
+              "textContent": "={{ $json.errorCode }}"
+            },
+            {
+              "key": "URL|rich_text",
+              "textContent": "={{ $json.url }}"
+            },
+            {
+              "key": "UserID|number",
+              "numberValue": "={{ $('Telegram Trigger').item.json.message.from.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2160,
+        448
+      ],
+      "id": "99497724-3e9e-4bc2-9d66-d2cf72b03d89",
+      "name": "Create a database page",
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $('Normalize HTTP error response').item.json.userMessage }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2384,
+        448
+      ],
+      "id": "ef23b9cb-0814-4c53-90dd-002be324916c",
+      "name": "Failed fetching HTTP",
+      "webhookId": "8f5902c0-1d76-42e3-9cc5-c34aba560e1c",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Router').item.json.message.chat.id }}",
+        "messageId": "={{ $('Processing by teacher').item.json.result.message_id }}",
+        "text": "=🎓 Материал для изучения готов!\n\n📚 Название:\n{{ $(\"Parse AI output\").item.json.title }}\n\n🎯 Уровень сложности:\n{{ $(\"Parse AI output\").item.json.difficulty }}\n\n💡 Ключевые моменты:\n{{ $(\"Parse AI output\").item.json.keyPointsText }}\n\n🧩 Основные концепции:\n{{ $(\"Parse AI output\").item.json.mainConceptsText }}\n\n📝 Готов проверить свои знания?\nИспользуй команду /quiz, и посмотрим, что ты усвоил.",
+        "additionalFields": {}
+      },
+      "id": "ef1b04a8-ae19-454f-8d42-997243c5927e",
+      "name": "Learn summary",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3408,
+        256
+      ],
+      "webhookId": "a5c225dd-320d-448f-88e6-6510d0d8377f",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ [\n  '📡 Отправился на поиски знаний...',\n  '🔍 Ищу самое полезное в статье...',\n  '📚 Перелистываю страницы быстрее библиотекаря...',\n  '🕵️ Изучаю материал...',\n  '🧹 Убираю рекламу, баннеры и прочую интернет-пыль...',\n  '✂️ Вырезаю всё лишнее, оставляю только знания...',\n  '📖 Читаю статью так, чтобы потом не было стыдно за квиз...',\n  '☕ Завариваю себе виртуальный кофе и начинаю читать...'\n][Math.floor(Math.random() * 8)]}}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        208
+      ],
+      "id": "d2611dc2-ff75-43b1-a483-a81565cfc63e",
+      "name": "Loading URL",
+      "webhookId": "15fb644f-006b-4306-b682-90c3b326a846",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5ed3d3c7-935a-4ba7-b30d-b858229a270f",
+              "leftValue": "={{ $json.shouldUpdateSession }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1136,
+        1264
+      ],
+      "id": "d0c4891a-ce29-44c3-b091-4b52d7c1724d",
+      "name": "Is in progress?"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Process answer').item.json.chatId }}",
+        "text": "=⚡ Спокойно, этот ответ уже попал в протокол экзамена.\n\nДля нового испытания используй /quiz.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        1168
+      ],
+      "id": "a8ce0e74-f833-40e2-9415-dd7c115e9a8e",
+      "name": "Already completed",
+      "webhookId": "9fcc0c06-9f1e-417e-8542-664d2fad940f",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "messageId": "={{ $('Loading URL').item.json.result.message_id }}",
+        "text": "={{ [\n\"👨‍🏫 Учитель уже достал красную ручку...\",\n\"🧠 Выделяю главное и прячу воду между строк...\",\n\"📋 Собираю ключевые идеи в удобный конспект...\",\n\"🎓 Превращаю длинную статью в материал для обучения...\",\n\"🤔 Определяю, насколько сильно эта тема может взорвать мозг...\",\n\"📚 Пытаюсь объяснить материал так, чтобы его понял даже сонный разработчик...\"\n][Math.floor(Math.random() * 8)]}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2384,
+        256
+      ],
+      "id": "fd3b72a5-f328-4933-8610-06453f308227",
+      "name": "Processing by teacher",
+      "webhookId": "15fb644f-006b-4306-b682-90c3b326a846",
+      "credentials": {
+        "telegramApi": {
+          "id": "i0fXKh5Z0C37Oq8F",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "36bb5db0-38d3-8011-aee1-d51c7669c66c",
+          "mode": "list",
+          "cachedResultName": "AI Materials",
+          "cachedResultUrl": "https://www.notion.so/36bb5db038d38011aee1d51c7669c66c"
+        },
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "UserId|number",
+              "condition": "equals",
+              "numberValue": "={{ $json.message.from.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        784
+      ],
+      "id": "a0bd7e96-2f3b-4917-b48c-5b3378660824",
+      "name": "Get AI materials created by user",
+      "alwaysOutputData": true,
+      "credentials": {
+        "notionOAuth2Api": {
+          "id": "IRAihBDiYdRc35Ph",
+          "name": "Notion OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = [];\n\nfor (const item of items) {\n  const json = item.json;\n\n  const title =\n    json.name ||\n    'Untitled topic';\n\n  const pageId = json.id;\n\n  if (!pageId) {\n    continue;\n  }\n\n  rows.push([\n    {\n      text: String(title).slice(0, 60),\n      callback_data: `topic:${pageId}`,\n    },\n    ]\n  );\n}\n\nreturn [\n  {\n    json: {\n      body: {\n        chat_id: $('Router').item.json.message.chat.id,\n        text: rows.length > 0\n  ? '🧠 Выберите одну из тем для проверки знаний:'\n  : '🤔 Пока что мне нечего экзаменовать.\\n\\nОтправьте ссылку через /learn, и учитель подготовит материал, а экзаменатор — вопросы.',\n        reply_markup: {\n          inline_keyboard: rows,\n        },\n      },\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        784
+      ],
+      "id": "67979292-2729-4763-b5c0-3d4e53226bab",
+      "name": "Map topics"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        912,
+        784
+      ],
+      "id": "f237abf9-4d22-469f-bf5f-37ac01db04e4",
+      "name": "Choose the topic to learn"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3caf9029-52f3-43ce-912b-c09cbef0e2c9",
+              "name": "message.text",
+              "value": "={{ $json.message.text.replace('/learn', '').trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        400
+      ],
+      "id": "02c2397c-4894-473f-953b-a53c6207ea47",
+      "name": "Extract parameter"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router": {
+      "main": [
+        [
+          {
+            "node": "Handle /start",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is valid URL?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parameter provided?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get AI materials created by user",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Handle Callback",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Answer Query a callback",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WTF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle /start": {
+      "main": [
+        []
+      ]
+    },
+    "Extract URL": {
+      "main": [
+        [
+          {
+            "node": "Loading URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Extract content from HTML",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalize HTTP error response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Examine the material",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract content from HTML": {
+      "main": [
+        [
+          {
+            "node": "Parsing failed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI output": {
+      "main": [
+        [
+          {
+            "node": "Add to AI Materials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate questions",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate questions",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate questions": {
+      "main": [
+        [
+          {
+            "node": "Add to Quizz Questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Examine the material": {
+      "main": [
+        [
+          {
+            "node": "Parse AI output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to AI Materials": {
+      "main": [
+        [
+          {
+            "node": "Learn summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting AI material": {
+      "main": [
+        [
+          {
+            "node": "Generate questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Callback": {
+      "main": [
+        [
+          {
+            "node": "Please, wait...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to Quizz Questions": {
+      "main": [
+        [
+          {
+            "node": "Map first question",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map first question": {
+      "main": [
+        [
+          {
+            "node": "Send Question 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Quizz session": {
+      "main": [
+        [
+          {
+            "node": "Process answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process answer": {
+      "main": [
+        [
+          {
+            "node": "Is in progress?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update question session": {
+      "main": [
+        [
+          {
+            "node": "Send answer feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has next question?": {
+      "main": [
+        [
+          {
+            "node": "Send next question",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send answer feedback": {
+      "main": [
+        [
+          {
+            "node": "Has next question?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer Query a callback": {
+      "main": [
+        [
+          {
+            "node": "Get Quizz session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Please, wait...": {
+      "main": [
+        [
+          {
+            "node": "Typing...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typing...": {
+      "main": [
+        [
+          {
+            "node": "Try to get existing quizz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Try to get existing quizz": {
+      "main": [
+        [
+          {
+            "node": "Quizz exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quizz exists?": {
+      "main": [
+        [
+          {
+            "node": "Getting AI material",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update question session1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update question session1": {
+      "main": [
+        [
+          {
+            "node": "Map first question",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parameter provided?": {
+      "main": [
+        [
+          {
+            "node": "Extract parameter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Please send an URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is valid URL?": {
+      "main": [
+        [
+          {
+            "node": "Extract URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "This is not a valid URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Please send an URL": {
+      "main": [
+        []
+      ]
+    },
+    "Parsing failed?": {
+      "main": [
+        [
+          {
+            "node": "Save failed URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Processing by teacher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save failed URL": {
+      "main": [
+        [
+          {
+            "node": "Couldn't extract content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize HTTP error response": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a database page": {
+      "main": [
+        [
+          {
+            "node": "Failed fetching HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Learn summary": {
+      "main": [
+        []
+      ]
+    },
+    "Loading URL": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is in progress?": {
+      "main": [
+        [
+          {
+            "node": "Already completed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update question session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing by teacher": {
+      "main": [
+        [
+          {
+            "node": "Examine the material",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get AI materials created by user": {
+      "main": [
+        [
+          {
+            "node": "Map topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map topics": {
+      "main": [
+        [
+          {
+            "node": "Choose the topic to learn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract parameter": {
+      "main": [
+        [
+          {
+            "node": "Is valid URL?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "d78521c6-6e96-42aa-8fd8-053cb262561f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e1f82ccaa1a2567464a950433958603c7cd93e333e7e7dd5e9c45600f1e2ce5c"
+  },
+  "id": "pSxg4otgO7Zj0uEq",
+  "tags": []
+}
